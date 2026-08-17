@@ -18,8 +18,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # --- CONFIGURATION ---
-BOT_TOKEN = "8892594189:AAGn3zxtbZpqkrJ_r-1SDjFILQDRsSPXQ7k"  # Apna Telegram Bot Token
-ADMIN_ID = 8999416691  # Apni Telegram Numeric User ID
+BOT_TOKEN = "8892594189:AAGn3zxtbZpqkrJ_r-1SDjFILQDRsSPXQ7k"  # Testing Bot Token
+ADMIN_ID = 8999416691  # Admin Telegram Numeric User ID
 
 # --- API & VIDEO CONFIGURATION ---
 NINEX_SETUP_VIDEO = "YAHAN_9X_SETUP_VIDEO_KA_LINK_DALNA"  # Baad mein link daal dena
@@ -63,7 +63,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     welcome_text = (
         "🏪 ━ JIBON MODS SHOP ━ 🏪\n"
         "  ━━━━━━━━━━━━━━━━━━\n\n"
-        "👋 Welcome, 𝗣𝗥𝗘𝗠𝗜𝗨𝗠!\n\n"
+        "👋 Welcome, PREMIUM!\n\n"
         "⭐ ━ SHOP FEATURES ━ ⭐\n\n"
         "├ 🔑 Premium Game Keys\n"
         "├ ⚡ Instant Delivery 24/7\n"
@@ -72,17 +72,17 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "├ 🎁 Referral Rewards\n"
         "└ 🏆 Professional Support\n\n"
         "  ━━━━━━━━━━━━━━━━━━\n"
-        "🔥 *Choose a mod below to check setup guides & pricing!*\n\n"
-        "👑 *Official Support:* @VIDEO_GROUP_PURCHASE"
+        "🔥 Choose a mod below to check setup guides & pricing!\n\n"
+        "👑 Official Support: @VIDEO_GROUP_PURCHASE"
     )
 
     if update.message:
         await update.message.reply_text(
-            welcome_text, reply_markup=reply_markup, parse_mode="Markdown"
+            welcome_text, reply_markup=reply_markup
         )
     elif update.callback_query:
         await update.callback_query.message.edit_text(
-            welcome_text, reply_markup=reply_markup, parse_mode="Markdown"
+            welcome_text, reply_markup=reply_markup
         )
 
 
@@ -103,15 +103,13 @@ async def show_demos(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_video(
         chat_id=query.message.chat_id,
         video=BALA_DEMO_VIDEO,
-        caption="🔴 *BALA-MOD Demo Video*",
-        parse_mode="Markdown",
+        caption="🔴 BALA-MOD Demo Video",
     )
     await context.bot.send_video(
         chat_id=query.message.chat_id,
         video=NINEX_DEMO_VIDEO,
-        caption="🔵 *NINE-X MOD Demo Video*\n\nChoose an option below to proceed:",
+        caption="🔵 NINE-X MOD Demo Video\n\nChoose an option below to proceed:",
         reply_markup=reply_markup,
-        parse_mode="Markdown",
     )
 
 
@@ -123,9 +121,9 @@ async def mod_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if data == "mod_bala":
         caption = (
-            "🔴 *Free Fire Bala Mods Full Setup Video*\n\n"
-            "🚨 *BALA MOD MENU — KEY AVAILABLE NOW!* 🚨\n\n"
-            "🎮 *NON-ROOT MOD MENU*\n"
+            "🔴 Free Fire Bala Mods Full Setup Video\n\n"
+            "🚨 BALA MOD MENU — KEY AVAILABLE NOW! 🚨\n\n"
+            "🎮 NON-ROOT MOD MENU\n"
             "✅ Main ID Safe\n"
             "⚡ Quick Key Delivery\n"
             "🔥 Multiple Duration Options"
@@ -156,14 +154,13 @@ async def mod_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
             video=BALA_SETUP_VIDEO,
             caption=caption,
             reply_markup=reply_markup,
-            parse_mode="Markdown",
         )
 
     elif data == "mod_ninex":
         caption = (
-            "🔵 *NINE-X MOD SETUP & PRICING*\n\n"
-            "⏱️ *Duration:* 10 Days\n"
-            "💵 *Price:* ₹500\n\n"
+            "🔵 NINE-X MOD SETUP & PRICING\n\n"
+            "⏱️ Duration: 10 Days\n"
+            "💵 Price: ₹500\n\n"
             "Watch the setup guide above carefully, then click below to purchase your key."
         )
         keyboard = [
@@ -184,7 +181,6 @@ async def mod_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
             video=NINEX_SETUP_VIDEO,
             caption=caption,
             reply_markup=reply_markup,
-            parse_mode="Markdown",
         )
 
 
@@ -197,11 +193,11 @@ async def payment_flow(update: Update, context: ContextTypes.DEFAULT_TYPE):
     context.user_data["selected_plan"] = plan
 
     qr_caption = (
-        f"💳 *Payment Page ({plan})*\n\n"
+        f"💳 Payment Page ({plan})\n\n"
         "1. Scan the QR code or pay to the UPI ID.\n"
         "2. Send the exact amount.\n"
-        "3. Click *'✅ I Have Paid'* and send your payment screenshot.\n\n"
-        f"🎧 *Support / Admin:* {SUPPORT_LINK}"
+        "3. Click '✅ I Have Paid' and send your payment screenshot.\n\n"
+        f"🎧 Support / Admin: {SUPPORT_LINK}"
     )
 
     keyboard = [
@@ -218,7 +214,6 @@ async def payment_flow(update: Update, context: ContextTypes.DEFAULT_TYPE):
         photo=qr_image_url,
         caption=qr_caption,
         reply_markup=reply_markup,
-        parse_mode="Markdown",
     )
 
 
@@ -229,11 +224,11 @@ async def i_have_paid(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     context.user_data["waiting_for_screenshot"] = True
     text = (
-        "📸 *Payment Screenshot Required*\n\n"
-        "Please send your **Payment Screenshot** right here in this chat.\n"
+        "📸 Payment Screenshot Required\n\n"
+        "Please send your Payment Screenshot right here in this chat.\n"
         "Our system will verify it and deliver your key!"
     )
-    await query.message.edit_text(text, parse_mode="Markdown")
+    await query.message.edit_text(text)
 
 
 # --- 6. HANDLE SCREENSHOT & AUTO API KEY DELIVERY ---
@@ -243,50 +238,46 @@ async def handle_screenshot(update: Update, context: ContextTypes.DEFAULT_TYPE):
         plan = context.user_data.get("selected_plan", "MOD")
 
         forward_caption = (
-            f"🔔 *New Payment Proof Received!*\n\n"
-            f"👤 *User:* {user.full_name} (@{user.username or 'No Username'})\n"
-            f"🆔 *User ID:* `{user.id}`\n"
-            f"📦 *Plan:* {plan}"
+            f"🔔 New Payment Proof Received!\n\n"
+            f"👤 User: {user.full_name} (@{user.username or 'No Username'})\n"
+            f"🆔 User ID: {user.id}\n"
+            f"📦 Plan: {plan}"
         )
         await context.bot.send_photo(
             chat_id=ADMIN_ID,
             photo=update.message.photo[-1].file_id,
             caption=forward_caption,
-            parse_mode="Markdown",
         )
 
         context.user_data["waiting_for_screenshot"] = False
         await update.message.reply_text(
-            "⏳ *Payment Received!* Generating your key via API...",
-            parse_mode="Markdown",
+            "⏳ Payment Received! Generating your key via API...",
         )
 
         generated_key = generate_key_from_panel(plan)
 
         if generated_key:
             bill_message = (
-                f"🎉 *PAYMENT APPROVED & KEY DELIVERED!* 🎉\n\n"
+                f"🎉 PAYMENT APPROVED & KEY DELIVERED! 🎉\n\n"
                 f"--------------------------------------------\n"
-                f"🔑 *Your Key:* `{generated_key}`\n"
-                f"📅 *Plan:* {plan}\n"
+                f"🔑 Your Key: {generated_key}\n"
+                f"📅 Plan: {plan}\n"
                 f"--------------------------------------------\n\n"
-                f"📖 *HOW TO USE:*\n"
+                f"📖 HOW TO USE:\n"
                 f"1. Copy your activation key above.\n"
                 f"2. Open the game & paste the key in the mod menu.\n"
                 f"3. Enjoy your safe gameplay!\n\n"
-                f"⚠️ *Note:* Do not share your key with anyone.\n"
-                f"🎧 *Support:* {SUPPORT_LINK}"
+                f"⚠️ Note: Do not share your key with anyone.\n"
+                f"🎧 Support: {SUPPORT_LINK}"
             )
-            await update.message.reply_text(bill_message, parse_mode="Markdown")
+            await update.message.reply_text(bill_message)
         else:
             await update.message.reply_text(
                 "✅ Screenshot submitted! Admin will verify and send your key shortly.",
-                parse_mode="Markdown",
             )
             await context.bot.send_message(
                 chat_id=ADMIN_ID,
-                text=f"⚠️ *API Key Generation Failed for User `{user.id}`!* Please send key manually using `/sendkey`",
-                parse_mode="Markdown",
+                text=f"⚠️ API Key Generation Failed for User {user.id}! Please send key manually using /sendkey",
             )
 
 
@@ -300,7 +291,7 @@ async def send_key(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if len(context.args) < 2:
         await update.message.reply_text(
-            "⚠️ Usage: `/sendkey [UserID] [KEY]`", parse_mode="Markdown"
+            "⚠️ Usage: /sendkey [UserID] [KEY]"
         )
         return
 
@@ -308,21 +299,21 @@ async def send_key(update: Update, context: ContextTypes.DEFAULT_TYPE):
     key_value = " ".join(context.args[1:])
 
     bill_message = (
-        f"🎉 *PAYMENT APPROVED & KEY DELIVERED!* 🎉\n\n"
+        f"🎉 PAYMENT APPROVED & KEY DELIVERED! 🎉\n\n"
         f"--------------------------------------------\n"
-        f"🔑 *Your Key:* `{key_value}`\n"
+        f"🔑 Your Key: {key_value}\n"
         f"--------------------------------------------\n\n"
-        f"📖 *HOW TO USE:*\n"
+        f"📖 HOW TO USE:\n"
         f"1. Copy your activation key above.\n"
         f"2. Open the game & paste the key in the mod menu.\n"
         f"3. Enjoy your safe gameplay!\n\n"
-        f"⚠️ *Note:* Do not share your key with anyone.\n"
-        f"🎧 *Support:* {SUPPORT_LINK}"
+        f"⚠️ Note: Do not share your key with anyone.\n"
+        f"🎧 Support: {SUPPORT_LINK}"
     )
 
     try:
         await context.bot.send_message(
-            chat_id=target_user_id, text=bill_message, parse_mode="Markdown"
+            chat_id=target_user_id, text=bill_message
         )
         await update.message.reply_text("✅ Key sent successfully to the user!")
     except Exception as e:
@@ -354,10 +345,10 @@ def main():
 
     application.add_handler(MessageHandler(filters.PHOTO, handle_screenshot))
 
-    logger.info("Bot is running with styled colored buttons...")
+    logger.info("Bot is running smoothly with test token...")
     application.run_polling()
 
 
 if __name__ == "__main__":
     main()
-        
+    
