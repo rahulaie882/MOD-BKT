@@ -48,20 +48,20 @@ def generate_key_from_panel(duration_type):
         return None
 
 
-# --- 1. /START COMMAND (CUSTOM JIBON MODS SHOP DESIGN) ---
+# --- 1. /START COMMAND ---
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
         [
-            InlineKeyboardButton("🔴 BALA MOD", callback_data="mod_bala"),
-            InlineKeyboardButton("🔵 NINE-X MOD", callback_data="mod_ninex"),
+            InlineKeyboardButton("🔴 BALA MOD", callback_data="mod_bala", style="bg_danger"),
+            InlineKeyboardButton("🔵 NINE-X MOD", callback_data="mod_ninex", style="bg_primary"),
         ],
-        [InlineKeyboardButton("🎥 Watch Demo Videos", callback_data="show_demos")],
+        [InlineKeyboardButton("🎥 Watch Demo Videos", callback_data="show_demos", style="bg_primary")],
         [InlineKeyboardButton("🎧 Support Team", url=SUPPORT_LINK)],
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
 
     welcome_text = (
-        "🏪 ━ BABA MODS SHOP ━ 🏪\n"
+        "🏪 ━ JIBON MODS SHOP ━ 🏪\n"
         "  ━━━━━━━━━━━━━━━━━━\n\n"
         "👋 Welcome, 𝗣𝗥𝗘𝗠𝗜𝗨𝗠!\n\n"
         "⭐ ━ SHOP FEATURES ━ ⭐\n\n"
@@ -93,23 +93,23 @@ async def show_demos(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     keyboard = [
         [
-            InlineKeyboardButton("🔴 BALA Setup & Prices", callback_data="mod_bala"),
-            InlineKeyboardButton("🔵 NINE-X Setup & Prices", callback_data="mod_ninex"),
+            InlineKeyboardButton("🔴 BALA Setup & Prices", callback_data="mod_bala", style="bg_danger"),
+            InlineKeyboardButton("🔵 NINE-X Setup & Prices", callback_data="mod_ninex", style="bg_primary"),
         ],
-        [InlineKeyboardButton("🏠 Main Menu", callback_data="main_menu")],
+        [InlineKeyboardButton("🏠 Main Menu", callback_data="main_menu", style="bg_primary")],
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
 
     await context.bot.send_video(
         chat_id=query.message.chat_id,
         video=BALA_DEMO_VIDEO,
-        caption="🎮 *BALA-MOD Demo Video*",
+        caption="🔴 *BALA-MOD Demo Video*",
         parse_mode="Markdown",
     )
     await context.bot.send_video(
         chat_id=query.message.chat_id,
         video=NINEX_DEMO_VIDEO,
-        caption="🔥 *NINE-X MOD Demo Video*\n\nChoose an option below to proceed:",
+        caption="🔵 *NINE-X MOD Demo Video*\n\nChoose an option below to proceed:",
         reply_markup=reply_markup,
         parse_mode="Markdown",
     )
@@ -123,7 +123,7 @@ async def mod_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if data == "mod_bala":
         caption = (
-            "👿 *Free Fire Bala Mods Full Setup Video*\n\n"
+            "🔴 *Free Fire Bala Mods Full Setup Video*\n\n"
             "🚨 *BALA MOD MENU — KEY AVAILABLE NOW!* 🚨\n\n"
             "🎮 *NON-ROOT MOD MENU*\n"
             "✅ Main ID Safe\n"
@@ -132,21 +132,21 @@ async def mod_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         keyboard = [
             [
-                InlineKeyboardButton("1H (₹35)", callback_data="buy_bala_1h"),
-                InlineKeyboardButton("3H (₹80)", callback_data="buy_bala_3h"),
+                InlineKeyboardButton("🔴 1H (₹35)", callback_data="buy_bala_1h", style="bg_danger"),
+                InlineKeyboardButton("🔴 3H (₹80)", callback_data="buy_bala_3h", style="bg_danger"),
             ],
             [
-                InlineKeyboardButton("6H (₹140)", callback_data="buy_bala_6h"),
-                InlineKeyboardButton("12H (₹240)", callback_data="buy_bala_12h"),
+                InlineKeyboardButton("🔴 6H (₹140)", callback_data="buy_bala_6h", style="bg_danger"),
+                InlineKeyboardButton("🔴 12H (₹240)", callback_data="buy_bala_12h", style="bg_danger"),
             ],
-            [InlineKeyboardButton("24H (₹380)", callback_data="buy_bala_24h")],
+            [InlineKeyboardButton("🔴 24H (₹380)", callback_data="buy_bala_24h", style="bg_danger")],
             [
-                InlineKeyboardButton("2D (₹650)", callback_data="buy_bala_2d"),
-                InlineKeyboardButton("3D (₹800)", callback_data="buy_bala_3d"),
+                InlineKeyboardButton("🔴 2D (₹650)", callback_data="buy_bala_2d", style="bg_danger"),
+                InlineKeyboardButton("🔴 3D (₹800)", callback_data="buy_bala_3d", style="bg_danger"),
             ],
             [
-                InlineKeyboardButton("🔙 Back", callback_data="show_demos"),
-                InlineKeyboardButton("🏠 Main Menu", callback_data="main_menu"),
+                InlineKeyboardButton("🔙 Back", callback_data="show_demos", style="bg_primary"),
+                InlineKeyboardButton("🏠 Main Menu", callback_data="main_menu", style="bg_primary"),
             ],
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
@@ -161,7 +161,7 @@ async def mod_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     elif data == "mod_ninex":
         caption = (
-            "🔥 *NINE-X MOD SETUP & PRICING*\n\n"
+            "🔵 *NINE-X MOD SETUP & PRICING*\n\n"
             "⏱️ *Duration:* 10 Days\n"
             "💵 *Price:* ₹500\n\n"
             "Watch the setup guide above carefully, then click below to purchase your key."
@@ -169,12 +169,12 @@ async def mod_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
         keyboard = [
             [
                 InlineKeyboardButton(
-                    "🛒 Purchase 10-Day Key - ₹500", callback_data="buy_ninex_10d"
+                    "🔵 Purchase 10-Day Key - ₹500", callback_data="buy_ninex_10d", style="bg_primary"
                 )
             ],
             [
-                InlineKeyboardButton("🔙 Back", callback_data="show_demos"),
-                InlineKeyboardButton("🏠 Main Menu", callback_data="main_menu"),
+                InlineKeyboardButton("🔙 Back", callback_data="show_demos", style="bg_primary"),
+                InlineKeyboardButton("🏠 Main Menu", callback_data="main_menu", style="bg_primary"),
             ],
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
@@ -205,9 +205,9 @@ async def payment_flow(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
     keyboard = [
-        [InlineKeyboardButton("✅ I Have Paid", callback_data="i_have_paid")],
+        [InlineKeyboardButton("✅ I Have Paid", callback_data="i_have_paid", style="bg_success")],
         [InlineKeyboardButton("🎧 Support Team", url=SUPPORT_LINK)],
-        [InlineKeyboardButton("🏠 Main Menu", callback_data="main_menu")],
+        [InlineKeyboardButton("🏠 Main Menu", callback_data="main_menu", style="bg_primary")],
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
 
@@ -354,10 +354,10 @@ def main():
 
     application.add_handler(MessageHandler(filters.PHOTO, handle_screenshot))
 
-    logger.info("Bot is running with Jibon Mods Shop design...")
+    logger.info("Bot is running with styled colored buttons...")
     application.run_polling()
 
 
 if __name__ == "__main__":
     main()
-  
+        
