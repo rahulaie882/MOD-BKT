@@ -56,7 +56,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     reply_markup = InlineKeyboardMarkup(keyboard)
 
     welcome_text = (
-        "🏪 ━ JIBON MODS SHOP ━ 🏪\n"
+        "🏪 ━ BABA MODS SHOP ━ 🏪\n"
         "━━━━━━━━━━━━━━━━━━\n\n"
         "👋 Welcome, PREMIUM!\n\n"
         "⭐ ━ SHOP FEATURES ━ ⭐\n\n"
