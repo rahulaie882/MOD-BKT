@@ -66,7 +66,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     reply_markup = InlineKeyboardMarkup(keyboard)
 
     welcome_text = (
-        "🏪 ━ JIBON MODS SHOP ━ 🏪\n"
+        "🏪 ━ BABA MODS SHOP ━ 🏪\n"
         "━━━━━━━━━━━━━━━━━━\n\n"
         "👋 Welcome, PREMIUM!\n\n"
         "⭐ ━ SHOP FEATURES ━ ⭐\n\n"
@@ -78,7 +78,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "└ 🏆 Professional Support\n\n"
         "━━━━━━━━━━━━━━━━━━\n"
         "🔥 Choose a mod below to check setup guides & pricing!\n\n"
-        "👑 Official Support: @VIDEO_GROUP_PURCHASE"
+        "👑 Official Support:https://t.me/+K83iEBrWmwphNGFl"
     )
 
     try:
@@ -484,7 +484,7 @@ async def send_key(update: Update, context: ContextTypes.DEFAULT_TYPE):
     bill_message = (
         "🎉 ━━━━━━━━━━━━━━━━━━━ 🎉\n"
         "     PAYMENT APPROVED\n"
-        "🎉 ━━━━━━━━━━━━━━━━━━━ 🎉\n\n"
+        " ━━━━━━━━━━━━━━━━━━━ \n\n"
         f"🔑 Your Activation Key:\n"
         f"`{key_value}`\n\n"
         "--------------------------------\n"
@@ -498,7 +498,7 @@ async def send_key(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "⚠️ Do not share your key with anyone.\n"
         f"🎧 Support: {SUPPORT_LINK}\n\n"
         "━━━━━━━━━━━━━━━━━━━━━━\n"
-        "JIBON MODS SHOP • Premium Quality"
+        "BABA MODS SHOP • Premium Quality"
     )
 
     try:
