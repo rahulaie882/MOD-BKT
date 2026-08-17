@@ -18,8 +18,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # --- CONFIGURATION ---
-BOT_TOKEN = "YAHAN_APNA_BOT_TOKEN_DALNA"  # Apna Telegram Bot Token
-ADMIN_ID = 123456789  # Apni Telegram Numeric User ID
+BOT_TOKEN = "8892594189:AAGn3zxtbZpqkrJ_r-1SDjFILQDRsSPXQ7k"  # Apna Telegram Bot Token
+ADMIN_ID = 8999416691  # Apni Telegram Numeric User ID
 
 # --- API & VIDEO CONFIGURATION ---
 NINEX_SETUP_VIDEO = "YAHAN_9X_SETUP_VIDEO_KA_LINK_DALNA"  # Baad mein link daal dena
