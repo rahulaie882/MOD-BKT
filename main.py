@@ -18,7 +18,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # --- CONFIGURATION ---
-BOT_TOKEN = "8892594189:AAGn3zxtbZpqkrJ_r-1SDjFILQDRsSPXQ7k"  # Testing Bot Token
+BOT_TOKEN = "8892594189:AAE6ikOmt4WU65yCBXBNvzvtKzrixDngl2I"  # Testing Bot Token
 ADMIN_ID = 8999416691  # Admin Telegram Numeric User ID
 
 # --- API & VIDEO CONFIGURATION ---
