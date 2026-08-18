@@ -109,11 +109,16 @@ def create_payment_link(amount, plan, user_id, user_name="Customer"):
     base = get_cashfree_base()
     link_id = f"tg_{user_id}_{uuid.uuid4().hex[:8]}"
 
+    # Sirf alphabets aur spaces rakhenge taaki Cashfree error na de
+    clean_name = "".join(ch for ch in str(user_name) if ch.isalnum() or ch.isspace()).strip()
+    if not clean_name or len(clean_name) < 2:
+        clean_name = "Customer"
+
     payload = {
         "customer_details": {
             "customer_phone": "9999999999",
             "customer_email": f"user{user_id}@telegram.bot",
-            "customer_name": str(user_name)[:50] or "Customer",
+            "customer_name": clean_name[:50],
         },
         "link_id": link_id,
         "link_amount": float(amount),
