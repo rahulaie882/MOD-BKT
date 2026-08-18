@@ -29,7 +29,7 @@ def get_cashfree_base():
     return "https://sandbox.cashfree.com/pg"
 
 def create_cashfree_order(amount, plan, user_id):
-    """Cashfree Orders API ke through sahi payment link banata hai"""
+    """Cashfree Orders API se session create karke payment URL banata hai"""
     base = get_cashfree_base()
     order_id = f"order_{user_id}_{uuid.uuid4().hex[:8]}"
 
@@ -60,18 +60,19 @@ def create_cashfree_order(amount, plan, user_id):
         r = requests.post(f"{base}/orders", json=payload, headers=headers, timeout=20)
         data = r.json()
         
-        if r.status_code in (200, 201) and "payment_session_id" in data:
-            session_id = data["payment_session_id"]
-            
-            # Cashfree official checkout payment link using session id
-            payment_url = f"https://checkout.cashfree.com/js/v3/index.html?payment_session_id={session_id}"
-            
-            return {
-                "success": True,
-                "order_id": order_id,
-                "payment_url": payment_url,
-            }
-            
+        logger.info(f"Cashfree Response: {r.status_code} {data}")
+
+        if r.status_code in (200, 201):
+            session_id = data.get("payment_session_id")
+            if session_id:
+                # Cashfree Web Checkout Link using session ID
+                payment_url = f"https://payments.cashfree.com/order/#pay?session_id={session_id}"
+                return {
+                    "success": True,
+                    "order_id": order_id,
+                    "payment_url": payment_url,
+                }
+                
         logger.error(f"Cashfree create order error: {r.status_code} {data}")
         return {"success": False, "error": data}
     except Exception as e:
@@ -101,7 +102,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         plan = data.split("_")[1]
         amount = 240.0
         
-        await query.message.reply_text("⏳ Payment session ban raha hai, wait...")
+        await query.message.reply_text("⏳ Payment link ban raha hai, wait...")
         
         result = create_cashfree_order(amount, plan, user_id)
         
@@ -109,17 +110,17 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             link_url = result["payment_url"]
             kb = [[InlineKeyboardButton("💳 Pay Now", url=link_url)]]
             await query.message.reply_text(
-                f"✅ **Payment Order Created Successfully!**\n\nPlan: {plan}\nAmount: ₹{amount}",
+                f"✅ **Payment Link Created Successfully!**\n\nPlan: {plan}\nAmount: ₹{amount}",
                 reply_markup=InlineKeyboardMarkup(kb),
                 parse_mode="Markdown"
             )
         else:
             err_msg = str(result.get("error"))
             await query.message.reply_text(
-                f"❌ Order nahi ban paya.\n\nError: `{err_msg}`",
+                f"❌ Link nahi ban paya.\n\nError: `{err_msg}`",
                 parse_mode="Markdown"
             )
-            logger.error(f"Cashfree order fail\nUser: {user_id}\nPlan: {plan}\nError: {err_msg}")
+            logger.error(f"Cashfree fail\nUser: {user_id}\nPlan: {plan}\nError: {err_msg}")
             
     elif data == "main_menu":
         keyboard = [[InlineKeyboardButton("🛒 Buy Plan (₹240)", callback_data="buy_BALA_1H")]]
@@ -131,7 +132,7 @@ def main():
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CallbackQueryHandler(button_handler))
     
-    logger.info("Bot started with Cashfree Orders API...")
+    logger.info("Bot started with Cashfree...")
     application.run_polling()
 
 if __name__ == "__main__":
