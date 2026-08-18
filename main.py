@@ -29,7 +29,7 @@ def get_cashfree_base():
     return "https://sandbox.cashfree.com/pg"
 
 def create_cashfree_order(amount, plan, user_id):
-    """Cashfree Orders API (Standard Checkout) ke through payment session banata hai"""
+    """Cashfree Orders API ke through sahi payment link banata hai"""
     base = get_cashfree_base()
     order_id = f"order_{user_id}_{uuid.uuid4().hex[:8]}"
 
@@ -60,20 +60,16 @@ def create_cashfree_order(amount, plan, user_id):
         r = requests.post(f"{base}/orders", json=payload, headers=headers, timeout=20)
         data = r.json()
         
-        # Cashfree Orders API me payment links / payment session URL 'payment_session_id' ya checkout URL se milta hai
         if r.status_code in (200, 201) and "payment_session_id" in data:
             session_id = data["payment_session_id"]
-            # Cashfree standard checkout link format
-            if CASHFREE_ENV.upper() == "PROD":
-                pay_url = f"https://sandbox.cashfree.com/pg/orders/{order_id}/pay" # Ya production checkout link
             
-            # Direct payment link generate karne ke liye Order Pay URL
-            payment_link = data.get("payments", {}).get("url") or f"https://payments.cashfree.com/order/#{session_id}"
+            # Cashfree official checkout payment link using session id
+            payment_url = f"https://checkout.cashfree.com/js/v3/index.html?payment_session_id={session_id}"
             
             return {
                 "success": True,
                 "order_id": order_id,
-                "payment_url": payment_link,
+                "payment_url": payment_url,
             }
             
         logger.error(f"Cashfree create order error: {r.status_code} {data}")
