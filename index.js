@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // ==========================================
-// अपना बोट टोकन और एडमिन चैट आईडी यहाँ डालें
+// Apna bot token aur admin chat ID yahan daalein
 // ==========================================
 const MASTER_TOKEN = "8899607476:AAFpIUW3lXi6EFzOkOsf5tSdmgAAMYKvoOI"; 
 const ADMIN_ID = "8963867689";     
@@ -28,7 +28,7 @@ function getCurrentBotUsername() {
     return 'DefaultBotUsername';
 }
 
-// --- एक्सप्रेस सर्वर (Instagram Ads लिंक) ---
+// --- Express Server (Instagram Ads Link) ---
 app.get('/start', (req, res) => {
     const currentUsername = getCurrentBotUsername();
     res.redirect(`https://t.me/${currentUsername}`);
@@ -42,25 +42,24 @@ app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
 
-// --- बोट कमांड: /start ---
+// --- Bot Command: /start ---
 bot.onText(/\/start/, (msg) => {
     const chatId = msg.chat.id;
-    bot.sendMessage(chatId, "🤖 **Master Control Panel Active**\n\nनया बोट लिंक सेट करने के लिए इस तरह भेजें:\n`/setlink आपका_नया_बोट_यूजरनेम`", { parse_mode: "Markdown" });
+    bot.sendMessage(chatId, "🤖 **Master Control Panel Active**\n\nNaya bot link set karne ke liye is tarah bhejein:\n`/setlink aapka_naya_bot_username`", { parse_mode: "Markdown" });
 });
 
-// --- बोट कमांड: /setlink ---
-bot.onText(/\/setlink (.+)/, (msg, match) => {
+// --- Bot Command: /setlink (Fixed & Clean) ---
+bot.onText(/\/setlink(?:\s+https?:\/\/t\.me\/|\s+@|\s+)?([a-zA-Z0-9_]+)/, (msg, match) => {
     const chatId = msg.chat.id.toString();
     
     if (chatId === ADMIN_ID.toString()) {
         let newUsername = match[1].trim();
-        newUsername = newUsername.replace('@', '');
 
         fs.writeFileSync(dbPath, JSON.stringify({ username: newUsername }));
         
-        bot.sendMessage(chatId, `✅ Success! New bot link updated to:\nhttps://t.me/${newUsername}\n\nअब Instagram Ads वाले यूजर इसी नए बोट पर जाएंगे।`);
+        bot.sendMessage(chatId, `✅ Success! New bot link updated to:\nhttps://t.me/${newUsername}\n\nAb Instagram Ads wale user isi naye bot par jayenge.`);
     } else {
         bot.sendMessage(chatId, "❌ You are not authorized to use this command.");
     }
 });
-           
+                                                
