@@ -15,7 +15,8 @@ const ADMIN_ID = "8963867689";
 app.use(express.json());
 
 const bot = new TelegramBot(MASTER_TOKEN, { webHook: true });
-const URL = 'https://mod-bkt-production.up.railway.app';
+const URL = 'https://babaseller.one';
+
 
 // Webhook set karein
 bot.setWebHook(`${URL}/bot${MASTER_TOKEN}`);
