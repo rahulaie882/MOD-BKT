@@ -6,9 +6,11 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Railway के Environment Variables से मास्टर टोकन और एडमिन आईडी ली जाएगी
-const MASTER_TOKEN = process.env.MASTER_BOT_TOKEN;
-const ADMIN_ID = process.env.ADMIN_ID; 
+// ==========================================
+// 🔴 यहाँ अपना बोट टोकन और अपनी चैट आईडी डाल दें
+// ==========================================
+const MASTER_TOKEN = "8899607476:AAHsR3aON_Kj60gZRKcKPmErgw_-vXO_oyw"; // जैसे: "123456789:ABCdefGhIJKlmNoPQRsTUVwxyZ"
+const ADMIN_ID = "6792426829";     // जैसे: "987654321" (नंबर में)
 
 const bot = new TelegramBot(MASTER_TOKEN, { polling: true });
 
@@ -35,12 +37,8 @@ app.get('/start', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    sendResponse(res, 'Dynamic Redirect Gateway is running!');
+    res.send('Dynamic Redirect Gateway is running!');
 });
-
-function sendResponse(res, message) {
-    res.send(message);
-}
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
@@ -51,7 +49,7 @@ bot.onText(/\/setlink (.+)/, (msg, match) => {
     const chatId = msg.chat.id.toString();
     
     // चेक करें कि कमांड सिर्फ आप (Admin) ही चला रहे हैं
-    if (checkAdmin(chatId, ADMIN_ID)) {
+    if (chatId === ADMIN_ID.toString()) {
         let newUsername = match[1].trim();
         // अगर यूजरनेम में @ लगा है तो उसे हटा दें
         newUsername = newUsername.replace('@', '');
@@ -64,8 +62,3 @@ bot.onText(/\/setlink (.+)/, (msg, match) => {
         bot.sendMessage(chatId, "❌ You are not authorized to use this command.");
     }
 });
-
-function checkAdmin(id1, id2) {
-    if (!id2) return true; // अगर एडमिन आईडी सेट नहीं है तो कोई भी चला सकता है
-    return id1 === id2.toString();
-}
