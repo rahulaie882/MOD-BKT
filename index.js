@@ -7,17 +7,15 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // ==========================================
-// 🔴 यहाँ अपना बोट टोकन और अपनी चैट आईडी डाल दें
+// अपना बोट टोकन और एडमिन चैट आईडी यहाँ डालें
 // ==========================================
-const MASTER_TOKEN = "8899607476:AAHsR3aON_Kj60gZRKcKPmErgw_-vXO_oyw"; // जैसे: "123456789:ABCdefGhIJKlmNoPQRsTUVwxyZ"
-const ADMIN_ID = "6792426829";     // जैसे: "987654321" (नंबर में)
+const MASTER_TOKEN = "8899607476:AAHsR3aON_Kj60gZRKcKPmErgw_-vXO_oyw"; 
+const ADMIN_ID = "8963867689";     
 
 const bot = new TelegramBot(MASTER_TOKEN, { polling: true });
 
-// लिंक सेव करने के लिए फाईल का रास्ता
 const dbPath = path.join(__dirname, 'link.json');
 
-// करंट लिंक प्राप्त करने का फंक्शन
 function getCurrentBotUsername() {
     try {
         if (fs.existsSync(dbPath)) {
@@ -30,7 +28,7 @@ function getCurrentBotUsername() {
     return 'DefaultBotUsername';
 }
 
-// --- एक्सप्रेस सर्वर (Instagram Ads के लिए परमानेंट लिंक) ---
+// --- एक्सप्रेस सर्वर (Instagram Ads लिंक) ---
 app.get('/start', (req, res) => {
     const currentUsername = getCurrentBotUsername();
     res.redirect(`https://t.me/${currentUsername}`);
@@ -44,21 +42,25 @@ app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
 
-// --- टेलीग्राम बोट कमांड (चैट से लिंक बदलने के लिए) ---
+// --- बोट कमांड: /start ---
+bot.onText(/\/start/, (msg) => {
+    const chatId = msg.chat.id;
+    bot.sendMessage(chatId, "🤖 **Master Control Panel Active**\n\nनया बोट लिंक सेट करने के लिए इस तरह भेजें:\n`/setlink आपका_नया_बोट_यूजरनेम`", { parse_mode: "Markdown" });
+});
+
+// --- बोट कमांड: /setlink ---
 bot.onText(/\/setlink (.+)/, (msg, match) => {
     const chatId = msg.chat.id.toString();
     
-    // चेक करें कि कमांड सिर्फ आप (Admin) ही चला रहे हैं
     if (chatId === ADMIN_ID.toString()) {
         let newUsername = match[1].trim();
-        // अगर यूजरनेम में @ लगा है तो उसे हटा दें
         newUsername = newUsername.replace('@', '');
 
-        // फाईल में नया बोट यूजरनेम सेव करें
         fs.writeFileSync(dbPath, JSON.stringify({ username: newUsername }));
         
-        bot.sendMessage(chatId, `✅ Success! New bot link updated to: https://t.me/${newUsername}\n\nअब Instagram Ads वाले यूजर इसी नए बोट पर जाएंगे।`);
+        bot.sendMessage(chatId, `✅ Success! New bot link updated to:\nhttps://t.me/${newUsername}\n\nअब Instagram Ads वाले यूजर इसी नए बोट पर जाएंगे।`);
     } else {
         bot.sendMessage(chatId, "❌ You are not authorized to use this command.");
     }
 });
+           
