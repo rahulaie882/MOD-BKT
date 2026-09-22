@@ -12,15 +12,19 @@ const PORT = process.env.PORT || 3000;
 const MASTER_TOKEN = "8899607476:AAHXL3Yenp-fNcPpqytMbObf4j4RC08bCns"; 
 const ADMIN_ID = "8963867689";     
 
-// Polling interval set kiya hai taaki conflict error na aaye
-const bot = new TelegramBot(MASTER_TOKEN, { 
-    polling: { 
-        interval: 2000,
-        autoStart: true,
-        params: {
-            allowed_updates: ["message", "callback_query"]
-        }
-    } 
+// Webhook mode (No Polling, No Conflict Error)
+const bot = new TelegramBot(MASTER_TOKEN, { webHook: true });
+
+// Railway ka public URL ya domain yahan set karein
+const URL = 'https://babaseller.one';
+bot.setWebHook(`${URL}/bot${MASTER_TOKEN}`);
+
+app.use(express.json());
+
+// Telegram webhook endpoint
+app.post(`/bot${MASTER_TOKEN}`, (req, res) => {
+    bot.processUpdate(req.body);
+    res.sendStatus(200);
 });
 
 const dbPath = path.join(__dirname, 'link.json');
@@ -44,7 +48,7 @@ app.get('/start', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    res.send('Dynamic Redirect Gateway is running!');
+    res.send('Dynamic Redirect Gateway (Webhook Mode) is running!');
 });
 
 app.listen(PORT, () => {
@@ -54,10 +58,10 @@ app.listen(PORT, () => {
 // --- Bot Command: /start ---
 bot.onText(/\/start/, (msg) => {
     const chatId = msg.chat.id;
-    bot.sendMessage(chatId, "🤖 **Master Control Panel Active**\n\nNaya bot link set karne ke liye is tarah bhejein:\n`/setlink aapka_naya_bot_username`", { parse_mode: "Markdown" });
+    bot.sendMessage(chatId, "🤖 **Master Control Panel Active (Webhook)**\n\nNaya bot link set karne ke liye is tarah bhejein:\n`/setlink aapka_naya_bot_username`", { parse_mode: "Markdown" });
 });
 
-// --- Bot Command: /setlink (Fixed & Clean) ---
+// --- Bot Command: /setlink ---
 bot.onText(/\/setlink(?:\s+https?:\/\/t\.me\/|\s+@|\s+)?([a-zA-Z0-9_]+)/, (msg, match) => {
     const chatId = msg.chat.id.toString();
     
