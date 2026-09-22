@@ -4,20 +4,18 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 // ==========================================
-// Naya Bot Token aur Admin Chat ID
+// Bot Token aur Admin Chat ID
 // ==========================================
 const MASTER_TOKEN = "8899607476:AAHXL3Yenp-fNcPpqytMbObf4j4RC08bCns"; 
 const ADMIN_ID = "8963867689";     
 
-// Express ka json middleware
 app.use(express.json());
 
 const bot = new TelegramBot(MASTER_TOKEN, { webHook: true });
 const URL = 'https://mod-bkt-production.up.railway.app';
-
 
 // Webhook set karein
 bot.setWebHook(`${URL}/bot${MASTER_TOKEN}`);
@@ -34,12 +32,12 @@ function getCurrentBotUsername() {
     try {
         if (fs.existsSync(dbPath)) {
             const data = JSON.parse(fs.readFileSync(dbPath, 'utf8'));
-            return data.username || 'DefaultBotUsername';
+            return data.username || 'NEW_VIIP_2_BOT';
         }
     } catch (err) {
         console.error("Read error:", err);
     }
-    return 'DefaultBotUsername';
+    return 'NEW_VIIP_2_BOT';
 }
 
 // --- Express Server (Instagram Ads Link) ---
@@ -52,7 +50,8 @@ app.get('/', (req, res) => {
     res.send('Dynamic Redirect Gateway (Webhook Mode) is running!');
 });
 
-app.listen(PORT, () => {
+// Railway ke liye 0.0.0.0 par bind karna zaroori hai taaki timeout na ho
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on port ${PORT}`);
 });
 
@@ -76,3 +75,4 @@ bot.onText(/\/setlink(?:\s+https?:\/\/t\.me\/|\s+@|\s+)?([a-zA-Z0-9_]+)/, (msg, 
         bot.sendMessage(chatId, "❌ You are not authorized to use this command.");
     }
 });
+            
