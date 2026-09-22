@@ -7,19 +7,19 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // ==========================================
-// Apna bot token aur admin chat ID yahan daalein
+// Naya Bot Token aur Admin Chat ID
 // ==========================================
 const MASTER_TOKEN = "8899607476:AAHXL3Yenp-fNcPpqytMbObf4j4RC08bCns"; 
 const ADMIN_ID = "8963867689";     
 
-// Webhook mode (No Polling, No Conflict Error)
-const bot = new TelegramBot(MASTER_TOKEN, { webHook: true });
-
-// Railway ka public URL ya domain yahan set karein
-const URL = 'https://babaseller.one';
-bot.setWebHook(`${URL}/bot${MASTER_TOKEN}`);
-
+// Express ka json middleware
 app.use(express.json());
+
+const bot = new TelegramBot(MASTER_TOKEN, { webHook: true });
+const URL = 'https://babaseller.one';
+
+// Webhook set karein
+bot.setWebHook(`${URL}/bot${MASTER_TOKEN}`);
 
 // Telegram webhook endpoint
 app.post(`/bot${MASTER_TOKEN}`, (req, res) => {
@@ -58,7 +58,7 @@ app.listen(PORT, () => {
 // --- Bot Command: /start ---
 bot.onText(/\/start/, (msg) => {
     const chatId = msg.chat.id;
-    bot.sendMessage(chatId, "🤖 **Master Control Panel Active (Webhook)**\n\nNaya bot link set karne ke liye is tarah bhejein:\n`/setlink aapka_naya_bot_username`", { parse_mode: "Markdown" });
+    bot.sendMessage(chatId, "🤖 **Master Control Panel Active**\n\nNaya bot link set karne ke liye is tarah bhejein:\n`/setlink aapka_naya_bot_username`", { parse_mode: "Markdown" });
 });
 
 // --- Bot Command: /setlink ---
