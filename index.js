@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 // ==========================================
 // Apna bot token aur admin chat ID yahan daalein
 // ==========================================
-const MASTER_TOKEN = "8899607476:AAFpIUW3lXi6EFzOkOsf5tSdmgAAMYKvoOI"; 
+const MASTER_TOKEN = "8899607476:AAHXL3Yenp-fNcPpqytMbObf4j4RC08bCns"; 
 const ADMIN_ID = "8963867689";     
 
 // Polling interval set kiya hai taaki conflict error na aaye
