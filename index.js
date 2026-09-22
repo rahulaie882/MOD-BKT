@@ -12,7 +12,16 @@ const PORT = process.env.PORT || 3000;
 const MASTER_TOKEN = "8899607476:AAFpIUW3lXi6EFzOkOsf5tSdmgAAMYKvoOI"; 
 const ADMIN_ID = "8963867689";     
 
-const bot = new TelegramBot(MASTER_TOKEN, { polling: true });
+// Polling interval set kiya hai taaki conflict error na aaye
+const bot = new TelegramBot(MASTER_TOKEN, { 
+    polling: { 
+        interval: 2000,
+        autoStart: true,
+        params: {
+            allowed_updates: ["message", "callback_query"]
+        }
+    } 
+});
 
 const dbPath = path.join(__dirname, 'link.json');
 
@@ -62,4 +71,3 @@ bot.onText(/\/setlink(?:\s+https?:\/\/t\.me\/|\s+@|\s+)?([a-zA-Z0-9_]+)/, (msg, 
         bot.sendMessage(chatId, "❌ You are not authorized to use this command.");
     }
 });
-                                                
