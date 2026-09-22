@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 // ==========================================
 // अपना बोट टोकन और एडमिन चैट आईडी यहाँ डालें
 // ==========================================
-const MASTER_TOKEN = "8899607476:AAHsR3aON_Kj60gZRKcKPmErgw_-vXO_oyw"; 
+const MASTER_TOKEN = "8899607476:AAFpIUW3lXi6EFzOkOsf5tSdmgAAMYKvoOI"; 
 const ADMIN_ID = "8963867689";     
 
 const bot = new TelegramBot(MASTER_TOKEN, { polling: true });
