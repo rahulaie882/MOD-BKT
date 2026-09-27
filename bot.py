@@ -18,7 +18,7 @@ from twocaptcha import TwoCaptcha
 
 # ─── CONFIG ────────────────────────────────────────────────────────────────
 
-BOT_TOKEN = "8979340651:AAFeohXNNKun4te66MHwrRlgEcwumlmGtyE"   # BotFather se token yahan daalein
+BOT_TOKEN = "8979340651:AAFG1IkfQ7LQ71v-0tKPPaD2dH5MfWf5sOY"   # BotFather se token yahan daalein
 CHAT_ID   = "7010776848"              # Apna chat ID
 
 CONFIG = {
